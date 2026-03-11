@@ -82,7 +82,7 @@ function App() {
       <style>{`
         * { box-sizing: border-box; }
         .app { max-width: 900px; margin: 0 auto; padding: 24px; font-family: 'Segoe UI', system-ui, sans-serif; }
-        h1 { margin: 0 0 24px; font-size: 1.75rem; color: #1e293b; }
+        h1 { margin: 0 0 24px; font-size: 1.9rem; color: #0f172a; letter-spacing: -0.02em; }
         .form { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
         .form h2 { margin: 0 0 16px; font-size: 1.1rem; color: #475569; }
         .form-row { margin-bottom: 12px; }
@@ -96,16 +96,58 @@ function App() {
         .btn-primary:hover { background: #2563eb; }
         .btn-danger { background: #ef4444; color: white; padding: 6px 12px; font-size: 0.85rem; }
         .btn-danger:hover { background: #dc2626; }
-        .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filters {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 20px;
+          flex-wrap: wrap;
+          padding: 10px 12px;
+          background: #f8fafc;
+          border-radius: 999px;
+          border: 1px solid #e2e8f0;
+        }
         .filter-btn {
           padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: white; font-weight: 500; cursor: pointer;
           color: #64748b;
         }
         .filter-btn:hover { background: #f1f5f9; color: #334155; }
         .filter-btn.active { background: #3b82f6; color: white; border-color: #3b82f6; }
-        .cards { display: flex; flex-direction: column; gap: 16px; }
+        .list-section { margin-top: 4px; }
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 12px;
+          margin-bottom: 12px;
+        }
+        .section-title {
+          margin: 0;
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: #0f172a;
+        }
+        .section-subtitle {
+          font-size: 0.85rem;
+          color: #64748b;
+          white-space: nowrap;
+        }
+        .cards {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 16px;
+        }
         .card {
-          background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          background: white;
+          border-radius: 14px;
+          padding: 18px 20px;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 1px 3px rgba(15,23,42,0.06);
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+        }
+        .card:hover {
+          transform: translateY(-2px);
+          border-color: #cbd5e1;
+          box-shadow: 0 8px 16px rgba(15,23,42,0.08);
         }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
         .card-title { margin: 0; font-size: 1.1rem; color: #1e293b; }
@@ -116,6 +158,11 @@ function App() {
         .card-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .card-actions select { padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem; }
         .empty { text-align: center; padding: 40px 20px; color: #64748b; background: #f8fafc; border-radius: 12px; border: 1px dashed #e2e8f0; }
+        @media (min-width: 768px) {
+          .cards {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
       `}</style>
 
       <div className="app">
@@ -168,51 +215,65 @@ function App() {
           ))}
         </div>
 
-        <div className="cards">
-          {filteredTickets.length === 0 ? (
-            <div className="empty">
-              {tickets.length === 0
-                ? 'Aucun ticket. Créez-en un ci-dessus.'
-                : 'Aucun ticket pour ce filtre.'}
-            </div>
-          ) : (
-            filteredTickets.map((ticket) => (
-              <div key={ticket.id} className="card">
-                <div className="card-header">
-                  <h3 className="card-title">{ticket.titre}</h3>
-                  <span
-                    className="badge"
-                    style={{ backgroundColor: PRIORITY_COLORS[ticket.priorite], color: 'white' }}
-                  >
-                    {PRIORITY_OPTIONS.find((p) => p.value === ticket.priorite)?.label ?? ticket.priorite}
-                  </span>
-                </div>
-                <div className="card-meta">
-                  <span className="card-date">Créé le {formatDate(ticket.dateCreation)}</span>
-                </div>
-                {ticket.description && (
-                  <p className="card-desc">{ticket.description}</p>
-                )}
-                <div className="card-actions">
-                  <select
-                    value={ticket.statut}
-                    onChange={(e) => handleChangeStatut(ticket.id, e.target.value)}
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s.value} value={s.value}>{s.label}</option>
-                    ))}
-                  </select>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(ticket.id)}
-                  >
-                    Supprimer
-                  </button>
-                </div>
+        <div className="list-section">
+          <div className="section-header">
+            <h2 className="section-title">Liste des tickets</h2>
+            <span className="section-subtitle">
+              {filteredTickets.length} ticket{filteredTickets.length > 1 ? 's' : ''}{' '}
+              {filter !== 'all'
+                ? `• Filtre : ${
+                    FILTER_OPTIONS.find((opt) => opt.value === filter)?.label ?? filter
+                  }`
+                : ''}
+            </span>
+          </div>
+
+          <div className="cards">
+            {filteredTickets.length === 0 ? (
+              <div className="empty">
+                {tickets.length === 0
+                  ? 'Aucun ticket. Créez-en un ci-dessus.'
+                  : 'Aucun ticket pour ce filtre.'}
               </div>
-            ))
-          )}
+            ) : (
+              filteredTickets.map((ticket) => (
+                <div key={ticket.id} className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">{ticket.titre}</h3>
+                    <span
+                      className="badge"
+                      style={{ backgroundColor: PRIORITY_COLORS[ticket.priorite], color: 'white' }}
+                    >
+                      {PRIORITY_OPTIONS.find((p) => p.value === ticket.priorite)?.label ?? ticket.priorite}
+                    </span>
+                  </div>
+                  <div className="card-meta">
+                    <span className="card-date">Créé le {formatDate(ticket.dateCreation)}</span>
+                  </div>
+                  {ticket.description && (
+                    <p className="card-desc">{ticket.description}</p>
+                  )}
+                  <div className="card-actions">
+                    <select
+                      value={ticket.statut}
+                      onChange={(e) => handleChangeStatut(ticket.id, e.target.value)}
+                    >
+                      {STATUS_OPTIONS.map((s) => (
+                        <option key={s.value} value={s.value}>{s.label}</option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(ticket.id)}
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>
