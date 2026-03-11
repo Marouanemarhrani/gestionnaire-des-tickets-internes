@@ -18,9 +18,10 @@
 
 ## La vision produit
 
-Les équipes techniques perdent du temps à gérer leurs tâches par message ou sur papier. Il manque un outil simple, rapide à déployer et sans configuration complexe.
-
-En tant que membre d'une équipe de développement, ce projet permet de suivre l'avancement des tâches en temps réel, sans inscription ni configuration.
+Les équipes techniques perdent du temps à gérer leurs tâches par message ou sur papier. Il manque un
+outil simple, rapide à déployer et sans configuration complexe.
+En tant que membre d'une équipe de développement, ce projet permet de suivre l'avancement des
+tâches en temps réel, sans inscription ni configuration.
 
 ---
 
@@ -28,13 +29,13 @@ En tant que membre d'une équipe de développement, ce projet permet de suivre l
 
 | ID | User Story | MoSCoW | Statut |
 |----|-----------|--------|--------|
-| US-01 | En tant qu'utilisateur, je veux créer un ticket avec titre + description afin de tracer une tâche. | Must | ✅ Livré |
-| US-02 | En tant qu'utilisateur, je veux voir la liste de tous les tickets afin d'avoir une vue d'ensemble. | Must | ✅ Livré |
-| US-03 | En tant qu'utilisateur, je veux changer le statut (To Do / In Progress / Done) afin de suivre l'avancement. | Must | ✅ Livré |
-| US-04 | En tant qu'utilisateur, je veux assigner un ticket à un membre afin de savoir qui fait quoi. | Should | ✅ Livré |
-| US-05 | En tant qu'utilisateur, je veux filtrer les tickets par statut afin de me concentrer. | Could | ✅ Livré |
-| US-06 | En tant qu'utilisateur, je veux supprimer un ticket afin de garder le backlog propre. | Should | ✅ Livré |
-| US-07 | Compteur de tickets par statut | Won't | ❌ Reporté |
+| US-01 | En tant qu'utilisateur, je veux créer un ticket avec titre + description afin de tracer une tâche. | Must | Livré |
+| US-02 | En tant qu'utilisateur, je veux voir la liste de tous les tickets afin d'avoir une vue d'ensemble. | Must | Livré |
+| US-03 | En tant qu'utilisateur, je veux changer le statut (To Do / In Progress / Done) afin de suivre l'avancement. | Must | Livré |
+| US-04 | En tant qu'utilisateur, je veux assigner un ticket à un membre afin de savoir qui fait quoi. | Should | Livré |
+| US-05 | En tant qu'utilisateur, je veux filtrer les tickets par statut afin de me concentrer. | Could | Livré |
+| US-06 | En tant qu'utilisateur, je veux supprimer un ticket afin de garder le backlog propre. | Should | Livré |
+| US-07 | Compteur de tickets par statut | Won't | Reporté |
 
 ---
 
@@ -51,12 +52,12 @@ Une User Story est considérée comme terminée quand :
 
 ## Ce qui a été livré (MVP)
 
-- ✅ Création de tickets (titre, description, priorité)
-- ✅ Affichage de tous les tickets sur la page principale
-- ✅ Changement de statut (To Do / In Progress / Done)
-- ✅ Assignation à un membre
-- ✅ Filtre par statut
-- ✅ Suppression avec confirmation
+- Création de tickets (titre, description, priorité)
+- Affichage de tous les tickets sur la page principale
+- Changement de statut (To Do / In Progress / Done)
+- Assignation à un membre
+- Filtre par statut
+- Suppression avec confirmation
 
 ### Lancer le projet
 
@@ -94,19 +95,19 @@ Ouvrir **http://localhost:5173**
 ## Comment on a utilisé l'IA
 
 **Ce qui a bien marché :**
-- ✅ Générer un endpoint Express complet à partir d'une User Story → résultat en 1 prompt
-- ✅ Générer le code React complet
-- ✅ Débugger les erreurs en collant le message d'erreur directement dans le chat
-- ✅ Générer le HTML/JSX du formulaire de création de ticket
-- ✅ Structure des composants
+- Générer un endpoint Express complet à partir d'une User Story → résultat en 1 prompt
+- Générer le code React complet
+- Débugger les erreurs en collant le message d'erreur directement dans le chat
+- Générer le HTML/JSX du formulaire de création de ticket
+- Structure des composants
 
 **Ce qui a moins bien marché :**
-- ❌ Les prompts trop vagues → l'IA proposait une stack différente de la nôtre
-- ❌ Demander plusieurs fonctionnalités en un seul prompt → code difficile à intégrer
+- Les prompts trop vagues → l'IA proposait une stack différente de la nôtre
+- Demander plusieurs fonctionnalités en un seul prompt → code difficile à intégrer
 
 **Ce que l'IA n'a pas su faire :**
-- ❌ Prendre les décisions de priorisation (MoSCoW) à notre place
-- ❌ Comprendre notre contexte sans qu'on lui redonne à chaque fois
+- Prendre les décisions de priorisation (MoSCoW) à notre place
+- Comprendre notre contexte sans qu'on lui redonne à chaque fois
 
 ---
 
