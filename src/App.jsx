@@ -66,6 +66,13 @@ function App() {
       ? tickets
       : tickets.filter((t) => t.statut === filter)
 
+  const countByStatut = {
+    all: tickets.length,
+    open: tickets.filter((t) => t.statut === 'open').length,
+    in_progress: tickets.filter((t) => t.statut === 'in_progress').length,
+    closed: tickets.filter((t) => t.statut === 'closed').length,
+  }
+
   const formatDate = (iso) => {
     const d = new Date(iso)
     return d.toLocaleDateString('fr-FR', {
@@ -96,13 +103,17 @@ function App() {
         .btn-primary:hover { background: #2563eb; }
         .btn-danger { background: #ef4444; color: white; padding: 6px 12px; font-size: 0.85rem; }
         .btn-danger:hover { background: #dc2626; }
-        .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-section { margin-bottom: 20px; }
+        .filter-label { display: block; font-weight: 600; color: #334155; margin-bottom: 8px; font-size: 0.95rem; }
+        .filters { display: flex; gap: 8px; flex-wrap: wrap; }
         .filter-btn {
           padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: white; font-weight: 500; cursor: pointer;
           color: #64748b;
         }
         .filter-btn:hover { background: #f1f5f9; color: #334155; }
         .filter-btn.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .filter-btn.active .filter-count { opacity: 0.95; }
+        .filter-count { margin-left: 4px; font-weight: 500; opacity: 0.85; }
         .cards { display: flex; flex-direction: column; gap: 16px; }
         .card {
           background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
@@ -155,17 +166,21 @@ function App() {
           <button type="submit" className="btn btn-primary">Créer le ticket</button>
         </form>
 
-        <div className="filters">
-          {FILTER_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              className={`filter-btn ${filter === opt.value ? 'active' : ''}`}
-              onClick={() => setFilter(opt.value)}
-            >
-              {opt.label}
-            </button>
-          ))}
+        <div className="filter-section">
+          <span className="filter-label">Filtrer par statut :</span>
+          <div className="filters">
+            {FILTER_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                className={`filter-btn ${filter === opt.value ? 'active' : ''}`}
+                onClick={() => setFilter(opt.value)}
+              >
+                {opt.label}
+                <span className="filter-count">({countByStatut[opt.value]})</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="cards">
