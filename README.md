@@ -18,10 +18,19 @@
 
 ## La vision produit
 
-Les équipes techniques perdent du temps à gérer leurs tâches par message ou sur papier. Il manque un
-outil simple, rapide à déployer et sans configuration complexe.
-En tant que membre d'une équipe de développement, ce projet permet de suivre l'avancement des
-tâches en temps réel, sans inscription ni configuration.
+Les équipes techniques perdent du temps à gérer leurs tâches par message ou sur papier. Il manque un outil simple, rapide à déployer et sans configuration complexe. En tant que membre d'une équipe de développement, ce projet permet de suivre l'avancement des tâches en temps réel, sans inscription ni configuration.
+
+---
+
+## Story Map
+
+| Activité | Gérer les tickets | Suivre l'avancement | Organiser le backlog | Personnaliser |
+|----------|:-----------------:|:-------------------:|:--------------------:|:-------------:|
+| **Sprint 1** | US-01 Créer un ticket | US-03 Changer le statut | US-02 Voir la liste | US-04 Assigner un ticket |
+| **Sprint 2** | US-06 Supprimer un ticket | US-05 Filtrer par statut | US-08 Définir une priorité | — |
+| **Reporté** | — | — | US-07 Compteur de statuts | — |
+
+**Ligne MVP :** Les US Sprint 1 constituent le minimum démo-able. Les US Sprint 2 enrichissent le produit.
 
 ---
 
@@ -65,8 +74,8 @@ tâches en temps réel, sans inscription ni configuration.
 |-----------|---------------|:--:|
 | US-05 | Filtre des tickets par statut | 2 |
 | US-06 | Suppression de ticket avec confirmation | 2 |
-| ~~US-07~~ | ~~Compteur de tickets par statut~~ | ~~3~~ |
 | US-08 | Indicateur de priorité sur les tickets | 2 |
+| ~~US-07~~ | ~~Compteur de tickets par statut~~ | ~~3~~ |
 
 > US-07 reportée faute de temps — hors scope MVP.
 
@@ -111,6 +120,11 @@ Story Points
 
 **Analyse :** La vélocité a baissé entre les deux sprints, en partie parce que les US du Sprint 2 étaient moins bien découpées et que l'intégration du filtre a demandé plus d'ajustements que prévu. Un Sprint 3 aurait permis de livrer les 5 pts restants (US-07 + ajustements UX).
 
+**Réponses aux questions client :**
+- *"Si on avait eu un Sprint 3 ?"* → On aurait livré US-07 (compteur de statuts, 3 pts) et ajouté des améliorations UX.
+- *"Votre vélocité a-t-elle évolué ?"* → Elle a baissé de 11 à 4 pts. Les US du Sprint 2 étaient plus complexes à intégrer que prévu.
+- *"Si on avait ajouté 5 pts de scope en milieu de Sprint 2 ?"* → Ces 5 pts auraient été repoussés au Sprint 3, on ne pouvait pas les absorber sans sacrifier des US déjà planifiées.
+
 ---
 
 ## Nos décisions techniques
@@ -136,8 +150,8 @@ Story Points
 - ✅ Proposer la structure des composants dès le départ
 
 **Ce qui a moins bien marché :**
-- Les prompts trop vagues → l'IA proposait une stack différente de la nôtre
-- Demander plusieurs fonctionnalités en un seul prompt → code difficile à intégrer
+- ❌ Les prompts trop vagues → l'IA proposait une stack différente de la nôtre
+- ❌ Demander plusieurs fonctionnalités en un seul prompt → code difficile à intégrer
 
 **Ce que l'IA n'a pas su faire :**
 - ❌ Prendre les décisions de priorisation MoSCoW à notre place
