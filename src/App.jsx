@@ -1,92 +1,87 @@
 import { useState } from 'react'
 
 const STATUS_OPTIONS = [
-  { value: 'open', label: 'Open' },
-  { value: 'in_progress', label: 'In Progress' },
-  { value: 'closed', label: 'Closed' },
+    { value: 'open', label: 'Open' },
+    { value: 'in_progress', label: 'In Progress' },
+    { value: 'closed', label: 'Closed' },
 ]
 
 const PRIORITY_OPTIONS = [
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' },
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' },
 ]
 
 const FILTER_OPTIONS = [
-  { value: 'all', label: 'Tous' },
-  { value: 'open', label: 'Open' },
-  { value: 'in_progress', label: 'In Progress' },
-  { value: 'closed', label: 'Closed' },
+    { value: 'all', label: 'Tous' },
+    { value: 'open', label: 'Open' },
+    { value: 'in_progress', label: 'In Progress' },
+    { value: 'closed', label: 'Closed' },
 ]
 
 const PRIORITY_COLORS = {
-  low: '#22c55e',
-  medium: '#f97316',
-  high: '#ef4444',
+    low: '#22c55e',
+    medium: '#f97316',
+    high: '#ef4444',
 }
 
 function App() {
-  const [tickets, setTickets] = useState([])
-  const [nextId, setNextId] = useState(1)
-  const [filter, setFilter] = useState('all')
-  const [form, setForm] = useState({
-    titre: '',
-    description: '',
-    priorite: 'medium',
-  })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!form.titre.trim()) return
-    const ticket = {
-      id: nextId,
-      titre: form.titre.trim(),
-      description: form.description.trim(),
-      priorite: form.priorite,
-      statut: 'open',
-      dateCreation: new Date().toISOString(),
-    }
-    setTickets((prev) => [...prev, ticket])
-    setNextId((prev) => prev + 1)
-    setForm({ titre: '', description: '', priorite: 'medium' })
-  }
-
-  const handleChangeStatut = (id, newStatut) => {
-    setTickets((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, statut: newStatut } : t))
-    )
-  }
-
-  const handleDelete = (id) => {
-    setTickets((prev) => prev.filter((t) => t.id !== id))
-  }
-
-  const filteredTickets =
-    filter === 'all'
-      ? tickets
-      : tickets.filter((t) => t.statut === filter)
-
-  const countByStatut = {
-    all: tickets.length,
-    open: tickets.filter((t) => t.statut === 'open').length,
-    in_progress: tickets.filter((t) => t.statut === 'in_progress').length,
-    closed: tickets.filter((t) => t.statut === 'closed').length,
-  }
-
-  const formatDate = (iso) => {
-    const d = new Date(iso)
-    return d.toLocaleDateString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    const [tickets, setTickets] = useState([])
+    const [nextId, setNextId] = useState(1)
+    const [filter, setFilter] = useState('all')
+    const [form, setForm] = useState({
+        titre: '',
+        description: '',
+        priorite: 'medium',
     })
-  }
 
-  return (
-    <>
-      <style>{`
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (!form.titre.trim()) return
+        const ticket = {
+            id: nextId,
+            titre: form.titre.trim(),
+            description: form.description.trim(),
+            priorite: form.priorite,
+            statut: 'open',
+            dateCreation: new Date().toISOString(),
+        }
+        setTickets((prev) => [...prev, ticket])
+        setNextId((prev) => prev + 1)
+        setForm({ titre: '', description: '', priorite: 'medium' })
+    }
+
+    const handleChangeStatut = (id, newStatut) => {
+        setTickets((prev) =>
+            prev.map((t) => (t.id === id ? {...t, statut: newStatut } : t))
+        )
+    }
+
+    const handleDelete = (id) => {
+        if (!window.confirm('Voulez-vous vraiment supprimer ce ticket ?')) return
+        setTickets((prev) => prev.filter((t) => t.id !== id))
+    }
+
+    const filteredTickets =
+        filter === 'all' ?
+        tickets :
+        tickets.filter((t) => t.statut === filter)
+
+    const formatDate = (iso) => {
+        const d = new Date(iso)
+        return d.toLocaleDateString('fr-FR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+    }
+
+    return ( <
+        >
+        <
+        style > { `
         * { box-sizing: border-box; }
         .app { max-width: 900px; margin: 0 auto; padding: 24px; font-family: 'Segoe UI', system-ui, sans-serif; }
         h1 { margin: 0 0 24px; font-size: 1.75rem; color: #1e293b; }
@@ -127,111 +122,132 @@ function App() {
         .card-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .card-actions select { padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem; }
         .empty { text-align: center; padding: 40px 20px; color: #64748b; background: #f8fafc; border-radius: 12px; border: 1px dashed #e2e8f0; }
-      `}</style>
+      ` } < /style>
 
-      <div className="app">
-        <h1>Gestionnaire de tickets</h1>
+        <
+        div className = "app" >
+        <
+        h1 > Gestionnaire de tickets < /h1>
 
-        <form className="form" onSubmit={handleSubmit}>
-          <h2>Nouveau ticket</h2>
-          <div className="form-row">
-            <label>Titre *</label>
-            <input
-              type="text"
-              value={form.titre}
-              onChange={(e) => setForm((f) => ({ ...f, titre: e.target.value }))}
-              placeholder="Titre du ticket"
-              required
-            />
-          </div>
-          <div className="form-row">
-            <label>Description</label>
-            <textarea
-              value={form.description}
-              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-              placeholder="Description..."
-            />
-          </div>
-          <div className="form-row">
-            <label>Priorité</label>
-            <select
-              value={form.priorite}
-              onChange={(e) => setForm((f) => ({ ...f, priorite: e.target.value }))}
-            >
-              {PRIORITY_OPTIONS.map((p) => (
-                <option key={p.value} value={p.value}>{p.label}</option>
-              ))}
-            </select>
-          </div>
-          <button type="submit" className="btn btn-primary">Créer le ticket</button>
-        </form>
-
-        <div className="filter-section">
-          <span className="filter-label">Filtrer par statut :</span>
-          <div className="filters">
-            {FILTER_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                className={`filter-btn ${filter === opt.value ? 'active' : ''}`}
-                onClick={() => setFilter(opt.value)}
-              >
-                {opt.label}
-                <span className="filter-count">({countByStatut[opt.value]})</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="cards">
-          {filteredTickets.length === 0 ? (
-            <div className="empty">
-              {tickets.length === 0
-                ? 'Aucun ticket. Créez-en un ci-dessus.'
-                : 'Aucun ticket pour ce filtre.'}
-            </div>
-          ) : (
-            filteredTickets.map((ticket) => (
-              <div key={ticket.id} className="card">
-                <div className="card-header">
-                  <h3 className="card-title">{ticket.titre}</h3>
-                  <span
-                    className="badge"
-                    style={{ backgroundColor: PRIORITY_COLORS[ticket.priorite], color: 'white' }}
-                  >
-                    {PRIORITY_OPTIONS.find((p) => p.value === ticket.priorite)?.label ?? ticket.priorite}
-                  </span>
-                </div>
-                <div className="card-meta">
-                  <span className="card-date">Créé le {formatDate(ticket.dateCreation)}</span>
-                </div>
-                {ticket.description && (
-                  <p className="card-desc">{ticket.description}</p>
-                )}
-                <div className="card-actions">
-                  <select
-                    value={ticket.statut}
-                    onChange={(e) => handleChangeStatut(ticket.id, e.target.value)}
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s.value} value={s.value}>{s.label}</option>
-                    ))}
-                  </select>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(ticket.id)}
-                  >
-                    Supprimer
-                  </button>
-                </div>
-              </div>
+        <
+        form className = "form"
+        onSubmit = { handleSubmit } >
+        <
+        h2 > Nouveau ticket < /h2> <
+        div className = "form-row" >
+        <
+        label > Titre * < /label> <
+        input type = "text"
+        value = { form.titre }
+        onChange = {
+            (e) => setForm((f) => ({...f, titre: e.target.value }))
+        }
+        placeholder = "Titre du ticket"
+        required /
+        >
+        <
+        /div> <
+        div className = "form-row" >
+        <
+        label > Description < /label> <
+        textarea value = { form.description }
+        onChange = {
+            (e) => setForm((f) => ({...f, description: e.target.value }))
+        }
+        placeholder = "Description..." /
+        >
+        <
+        /div> <
+        div className = "form-row" >
+        <
+        label > Priorité < /label> <
+        select value = { form.priorite }
+        onChange = {
+            (e) => setForm((f) => ({...f, priorite: e.target.value }))
+        } > {
+            PRIORITY_OPTIONS.map((p) => ( <
+                option key = { p.value }
+                value = { p.value } > { p.label } < /option>
             ))
-          )}
-        </div>
-      </div>
-    </>
-  )
+        } <
+        /select> < /
+        div > <
+        button type = "submit"
+        className = "btn btn-primary" > Créer le ticket < /button> < /
+        form >
+
+        <
+        div className = "filters" > {
+            FILTER_OPTIONS.map((opt) => ( <
+                button key = { opt.value }
+                type = "button"
+                className = { `filter-btn ${filter === opt.value ? 'active' : ''}` }
+                onClick = {
+                    () => setFilter(opt.value) } >
+                { opt.label } <
+                /button>
+            ))
+        } <
+        /div>
+
+        <
+        div className = "cards" > {
+            filteredTickets.length === 0 ? ( <
+                div className = "empty" > {
+                    tickets.length === 0 ?
+                    'Aucun ticket. Créez-en un ci-dessus.' : 'Aucun ticket pour ce filtre.'
+                } <
+                /div>
+            ) : (
+                filteredTickets.map((ticket) => ( <
+                    div key = { ticket.id }
+                    className = "card" >
+                    <
+                    div className = "card-header" >
+                    <
+                    h3 className = "card-title" > { ticket.titre } < /h3> <
+                    span className = "badge"
+                    style = {
+                        { backgroundColor: PRIORITY_COLORS[ticket.priorite], color: 'white' }
+                    } > { PRIORITY_OPTIONS.find((p) => p.value === ticket.priorite) ? .label ? ? ticket.priorite } <
+                    /span> < /
+                    div > <
+                    div className = "card-meta" >
+                    <
+                    span className = "card-date" > Créé le { formatDate(ticket.dateCreation) } < /span> < /
+                    div > {
+                        ticket.description && ( <
+                            p className = "card-desc" > { ticket.description } < /p>
+                        )
+                    } <
+                    div className = "card-actions" >
+                    <
+                    select value = { ticket.statut }
+                    onChange = {
+                        (e) => handleChangeStatut(ticket.id, e.target.value)
+                    } > {
+                        STATUS_OPTIONS.map((s) => ( <
+                            option key = { s.value }
+                            value = { s.value } > { s.label } < /option>
+                        ))
+                    } <
+                    /select> <
+                    button type = "button"
+                    className = "btn btn-danger"
+                    onClick = {
+                        () => handleDelete(ticket.id)
+                    } >
+                    Supprimer <
+                    /button> < /
+                    div > <
+                    /div>
+                ))
+            )
+        } <
+        /div> < /
+        div > <
+        />
+    )
 }
 
 export default App
