@@ -18,9 +18,10 @@
 
 ## La vision produit
 
-En tant que membre d'une équipe de développement, ce produit permet de créer, assigner et suivre des tickets d'équipe en temps réel, sans inscription ni configuration complexe.
-
-**Problème résolu :** Les équipes techniques perdent du temps à gérer leurs tâches par message ou sur papier. Il manque un outil simple, rapide à déployer, sans friction.
+Les équipes techniques perdent du temps à gérer leurs tâches par message ou sur papier. Il manque un
+outil simple, rapide à déployer et sans configuration complexe.
+En tant que membre d'une équipe de développement, ce projet permet de suivre l'avancement des
+tâches en temps réel, sans inscription ni configuration.
 
 ---
 
@@ -135,8 +136,8 @@ Story Points
 - ✅ Proposer la structure des composants dès le départ
 
 **Ce qui a moins bien marché :**
-- ❌ Les prompts trop vagues → l'IA proposait une stack différente de la nôtre
-- ❌ Demander plusieurs fonctionnalités en un seul prompt → code difficile à intégrer
+- Les prompts trop vagues → l'IA proposait une stack différente de la nôtre
+- Demander plusieurs fonctionnalités en un seul prompt → code difficile à intégrer
 
 **Ce que l'IA n'a pas su faire :**
 - ❌ Prendre les décisions de priorisation MoSCoW à notre place
